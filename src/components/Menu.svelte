@@ -4,12 +4,18 @@
   import { quadOut } from 'svelte/easing'
 
   import { signInWithGoogle } from '../helpers/firebase'
+  import { userId } from '../store'
 
+  let uid
+  userId.subscribe((id) => {
+    uid = id
+  })
   export let open
 </script>
 
 {#if open}
   <nav class="text-center bg-primary text-lg p-4 w-full h-full fixed top-12 left-0 z-10">
+    {uid}
     <Router>
       <Link to="/" class="pointer block m-2" on:click={() => (open = false)}>Home</Link>
       <Link to="/about" class="pointer block m-2" on:click={() => (open = false)}>About</Link>

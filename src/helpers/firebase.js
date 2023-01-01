@@ -1,9 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-// Your web app's Firebase configuration
+import Cookies from 'js-cookie'
+
+import { userId } from '../store.js'
 
 const firebaseConfig = {
   apiKey: import.meta.env['VITE_FIREBASE_API_KEY'],
@@ -12,20 +12,12 @@ const firebaseConfig = {
   storageBucket: import.meta.env['VITE_FIREBASE_STORAGE_BUCKET'],
   messagingSenderId: import.meta.env['VITE_FIREBASE_MESSAGING_SENDER_ID'],
   appId: import.meta.env['VITE_FIREBASE_APP_ID']
-  // apiKey: FIREBASE_API_KEY,
-  // authDomain: FIREBASE_AUTH_DOMAIN,
-  // projectId: FIREBASE_PROJECT_ID,
-  // storageBucket: FIREBASE_STORAGE_BUCKET,
-  // messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-  // appId: FIREBASE_APP_ID
 }
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const auth = getAuth()
 const provider = new GoogleAuthProvider()
-// console.log(provider)
-// connectAuthEmulator(auth, 'http://127.0.0.1:5173/#')
 
 export const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
@@ -34,9 +26,8 @@ export const signInWithGoogle = () => {
       const credential = GoogleAuthProvider.credentialFromResult(result)
       const token = credential.accessToken
       // The signed-in user info.
-      const user = result.user
-      console.log(result)
-      // ...
+      userId.set(result.user.uid)
+      Cookies.set('uid', result.user.uid)
     })
     .catch((error) => {
       // Handle Errors here.
