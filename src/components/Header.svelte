@@ -1,31 +1,22 @@
 <script>
-  import { Link, Router } from 'svelte-routing'
   import { Hamburger } from 'svelte-hamburgers'
   import BrightnessContrast from 'carbon-icons-svelte/lib/BrightnessContrast.svelte'
+  import Menu from './Menu.svelte'
 
   let open
+  const toggleDark = () => {
+    document.getElementById('body').classList.toggle('mode-dark')
+  }
 </script>
 
-<header
-  class="h-12 flex justify-center items-center gap-4 bg-primary"
->
-  <h1 class="text-2xl font-bold">My Diary</h1>
-  <nav class="md:hidden">
+<header class="bg-primary">
+  <div class=" mx-auto flex justify-between h-12 items-center md:max-w-4xl">
     <Hamburger bind:open --color="white" />
-    {#if open}
-      <Router>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/create">Create</Link>
-      </Router>
-    {/if}
-  </nav>
-  <nav class="hidden md:block">
-    <Router>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Link to="/create">Create</Link>
-    </Router>
-  </nav>
-  <BrightnessContrast size={32} />
+    <Menu bind:open />
+
+    <h1 class="text-2xl font-bold">My Diary</h1>
+    <button class="mr-4 text-white" on:click={toggleDark}>
+      <BrightnessContrast size={32} />
+    </button>
+  </div>
 </header>
