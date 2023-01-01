@@ -1,16 +1,51 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
+
 const firebaseConfig = {
-  apiKey: import.meta.env.FIREBASE_API_KEY,
-  authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.FIREBASE_APP_ID
+  apiKey: import.meta.env['VITE_FIREBASE_API_KEY'],
+  authDomain: import.meta.env['VITE_FIREBASE_AUTH_DOMAIN'],
+  projectId: import.meta.env['VITE_FIREBASE_PROJECT_ID'],
+  storageBucket: import.meta.env['VITE_FIREBASE_STORAGE_BUCKET'],
+  messagingSenderId: import.meta.env['VITE_FIREBASE_MESSAGING_SENDER_ID'],
+  appId: import.meta.env['VITE_FIREBASE_APP_ID']
+  // apiKey: FIREBASE_API_KEY,
+  // authDomain: FIREBASE_AUTH_DOMAIN,
+  // projectId: FIREBASE_PROJECT_ID,
+  // storageBucket: FIREBASE_STORAGE_BUCKET,
+  // messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  // appId: FIREBASE_APP_ID
 }
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
+const auth = getAuth()
+const provider = new GoogleAuthProvider()
+// console.log(provider)
+// connectAuthEmulator(auth, 'http://127.0.0.1:5173/#')
+
+export const signInWithGoogle = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      const token = credential.accessToken
+      // The signed-in user info.
+      const user = result.user
+      console.log(result)
+      // ...
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code
+      const errorMessage = error.message
+      // The email of the user's account used.
+      const email = error.email
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error)
+      // ...
+    })
+}
