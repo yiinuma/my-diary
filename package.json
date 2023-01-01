@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "carbon-icons-svelte": "^11.4.0",
+    "firebase": "^9.15.0",
     "svelte-routing": "^1.6.0"
   }
 }
