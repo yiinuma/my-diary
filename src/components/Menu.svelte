@@ -3,7 +3,7 @@
   import { scale } from 'svelte/transition'
   import { quadOut } from 'svelte/easing'
 
-  import { signInWithGoogle } from '../helpers/firebase'
+  import { signInWithGoogle, signOutWithGoogle } from '../helpers/firebase'
   import { userId } from '../store'
 
   let uid
@@ -20,7 +20,11 @@
       <Link to="/" class="pointer block m-2" on:click={() => (open = false)}>Home</Link>
       <Link to="/about" class="pointer block m-2" on:click={() => (open = false)}>About</Link>
       <Link to="/create" class="pointer block m-2" on:click={() => (open = false)}>Create</Link>
-      <Link to="#" class="pointer block m-2" on:click={signInWithGoogle}>Login</Link>
+      {#if !uid}
+        <Link to="#" class="pointer block m-2" on:click={signInWithGoogle}>Login</Link>
+      {:else}
+        <Link to="#" class="pointer block m-2" on:click={signOutWithGoogle}>Logout</Link>
+      {/if}
     </Router>
     <hr
       transition:scale={{

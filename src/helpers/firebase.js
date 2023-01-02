@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
 import Cookies from 'js-cookie'
 
 import { userId } from '../store.js'
@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
-const auth = getAuth()
+const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
 
 export const signInWithGoogle = () => {
@@ -38,5 +38,18 @@ export const signInWithGoogle = () => {
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error)
       // ...
+    })
+}
+
+export const signOutWithGoogle = () => {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+      Cookies.remove('uid')
+      document.location.reload()
+    })
+    .catch((error) => {
+      // An error happened.
+      alert(error)
     })
 }

@@ -10,7 +10,7 @@
 </script>
 
 <header class="bg-primary">
-  <div class=" mx-auto flex justify-between h-12 items-center md:max-w-4xl">
+  <div class="mx-auto flex justify-between h-12 items-center md:max-w-4xl">
     <Hamburger bind:open --color="white" />
     <Menu bind:open />
 
