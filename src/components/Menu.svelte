@@ -15,15 +15,14 @@
 
 {#if open}
   <nav class="text-center bg-primary text-lg p-4 w-full h-full fixed top-12 left-0 z-10">
-    {uid}
     <Router>
       <Link to="/" class="pointer block m-2" on:click={() => (open = false)}>Home</Link>
       <Link to="/about" class="pointer block m-2" on:click={() => (open = false)}>About</Link>
       <Link to="/create" class="pointer block m-2" on:click={() => (open = false)}>Create</Link>
-      {#if !uid}
-        <Link to="#" class="pointer block m-2" on:click={signInWithGoogle}>Login</Link>
-      {:else}
+      {#if uid}
         <Link to="#" class="pointer block m-2" on:click={signOutWithGoogle}>Logout</Link>
+      {:else}
+        <Link to="#" class="pointer block m-2" on:click={signInWithGoogle}>Login</Link>
       {/if}
     </Router>
     <hr
