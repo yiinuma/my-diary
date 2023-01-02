@@ -10,8 +10,8 @@ module.exports = {
       secondary: '#D7C0AE',
       accent: '#967E76',
       background: '#EEE3CB',
-      white: '#FFFFFF',
+      white: '#FFFFFF'
     }
   },
-  plugins: []
+  plugins: [require('daisyui')]
 }
