@@ -1,4 +1,5 @@
 <script>
+  import { onDestroy } from 'svelte'
   import { Router, Link } from 'svelte-routing'
   import { scale } from 'svelte/transition'
   import { quadOut } from 'svelte/easing'
@@ -7,9 +8,10 @@
   import { userId } from '../store'
 
   let uid
-  userId.subscribe((id) => {
+  const unsubscribe = userId.subscribe((id) => {
     uid = id
   })
+  onDestroy(() => unsubscribe)
   export let open
 </script>
 
